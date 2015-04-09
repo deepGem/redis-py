@@ -876,6 +876,28 @@ class StrictRedis(object):
         """
         return self.execute_command('GET', name)
 
+    def geoadd(self, set_name, values):
+        """
+        Add a geo location with a name and value if it doesn't exist or update a value
+		if it already exists
+        """
+	pieces = []
+	pieces.append(set_name) 
+	for value in values:
+	        pieces.append(value)
+        return self.execute_command('geoadd', *pieces)
+
+    def georadius(self, zset_name, values):
+        """
+       	Retrieve values withi a certain radius from the given lat lng.  
+	Params - Values - list of lat, lng, distance, units	
+        """
+	pieces = []
+	pieces.append(zset_name) 
+	for value in values:
+	        pieces.append(value)
+        return self.execute_command('georadius', *pieces)
+
     def __getitem__(self, name):
         """
         Return the value at key ``name``, raises a KeyError if the key
